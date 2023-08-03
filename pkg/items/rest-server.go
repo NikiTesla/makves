@@ -3,6 +3,7 @@ package items
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -23,7 +24,7 @@ func (rS *RestServer) Run() error {
 
 // NewRestServer creates rest server with local storage from file
 func NewRestServer() *RestServer {
-	storage, err := NewLocalStorage("ueba.csv")
+	storage, err := NewLocalStorage(os.Getenv("ITEMS_STORAGE_FILE"))
 	if err != nil {
 		log.Fatalf("Cannot create storage for server, err: %s", err)
 	}

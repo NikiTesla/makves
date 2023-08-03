@@ -1,7 +1,9 @@
 package items
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -19,5 +21,10 @@ func (rS *RestServer) getItems(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte(record))
+	output, err := json.Marshal(record)
+	if err != nil {
+		log.Printf("cannot marshal record in json format, err: %s\n", err)
+	}
+
+	w.Write(output)
 }
