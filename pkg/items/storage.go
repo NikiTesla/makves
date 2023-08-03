@@ -13,10 +13,12 @@ type Storage interface {
 	getItem(id int) (record string, err error)
 }
 
+// LocalStorage is a structure for interactions with storage
 type LocalStorage struct {
 	storage map[int]map[string]string
 }
 
+// NewLocalStorage creates local storage from csv file in map[string]string format
 func NewLocalStorage(filename string) (*LocalStorage, error) {
 	storage := make(map[int]map[string]string)
 
@@ -49,13 +51,6 @@ func NewLocalStorage(filename string) (*LocalStorage, error) {
 			data[header[i]] = v
 		}
 
-		// data := make(map[string]interface{})
-		// err = json.Unmarshal([]byte(jsonString), &data)
-		// if err != nil {
-		// 	log.Printf("cannot parse json string, err: %s\n", err)
-		// 	continue
-		// }
-
 		id, err := strconv.Atoi(data["id"])
 		if err != nil {
 			log.Printf("cannot parse id, err: %s\n", err)
@@ -69,6 +64,7 @@ func NewLocalStorage(filename string) (*LocalStorage, error) {
 	return localStorage, nil
 }
 
+// getItem searches item in a storage
 func (lS *LocalStorage) getItem(id int) (map[string]string, error) {
 	record, ok := lS.storage[id]
 	if !ok {

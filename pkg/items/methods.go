@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// getItems returns response with json formatted record from local storage
 func (rS *RestServer) getItems(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil {
